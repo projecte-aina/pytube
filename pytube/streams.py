@@ -57,7 +57,11 @@ class Stream:
         self.video_codec, self.audio_codec = self.parse_codecs()
 
         self.is_otf: bool = stream["is_otf"]
-        self.bitrate: Optional[int] = stream["bitrate"]
+        try:
+            self.bitrate: Optional[int] = stream["bitrate"]
+        except KeyError:
+            print("Key Error: bitrate assigned 30")
+            self.bitrate = 30
 
         # filesize in bytes
         self._filesize: Optional[int] = int(stream.get('contentLength', 0))
